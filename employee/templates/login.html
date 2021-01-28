@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Student Management</title>
+<title>Login</title>
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -13,7 +13,7 @@
 
 <style type="text/css">
 body{
-  background-image:url(static/website/images/rain.jpg);
+  background-image:url(static/website/images/log.jpg);
   background-size:cover;
   background-position: center center;
 }
@@ -22,7 +22,7 @@ body{
     padding: 30px;
     margin: 50px;
     border-radius:10px;
-    opacity: 0.85;
+    opacity: 0.75;
    
   }
   .btn{
@@ -41,25 +41,46 @@ body{
     <div class="col-lg-3"></div>
     <div class="col-lg-6">
       <div id="ui">
-          <h2 style="text-align:center ">USER LOGIN</h2>
-          <form class="form-group text-center" action="" method="POST" name="myform">
+          <h2 style="text-align:center ">LOGIN</h2>
+          <form class="form-group text-center" action="" method="POST" name="myform" onsubmit="return validate()" required>
           {% csrf_token %}
 
                <br>
              
-              <input type="text" name="usname" class="form-control" placeholder="Enter your username ">
+              <input type="text" id="nm" name="usname" class="form-control" placeholder="Enter your username.. ">
               
                 <br>
             
           
                
-                  <input type="password" id="password" name="pas1"  placeholder="Enter your password" class="form-control">
+                  <input type="password" id="password" name="pas1"  placeholder="Enter your password.." class="form-control">
             
             <br>
                 
                   
                 <input class="btn btn-primary btn-block" type="submit" name="submit" value="Sign In">
               <br>
+              <script type="text/javascript">
+              function validate()
+              {
+                var un=document.getElementById('nm').value;
+                var pd=document.getElementById('password').value;
+                if(nm==" ")
+                { 
+                  alert("Username can't be empty")
+                  return false;
+                }
+                if(pd==" ")
+                { 
+                  alert("Password can't be empty")
+                  return false;
+                }
+
+              }
+
+              </script>
+
+
                 <div class="mt-2">
                   {% if success %}
                     <div class="alert alert-success">{{ success }}</div>

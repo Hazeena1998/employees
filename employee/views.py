@@ -6,14 +6,8 @@ from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 
-def home(request):
-    return render(request,'home.html')
-
-def about(request):
-    return render(request,'about.html')
-
-def contact(request):
-    return render(request, 'contact.html')
+def base(request):
+    return render(request,"base.html")
 
 def logins(request):
     if request.method == 'POST':
@@ -23,11 +17,20 @@ def logins(request):
         if user is not None and user.is_staff == 1:
             login(request,user)
             return render(request,'admin.html') 
+        elif user is not None and user.usertype =="employee":
+            login(request,user)
+            return render(request,"employee.html")
         else:
             return redirect(logins)
            
     else:
         return render(request,'login.html')
+
+@login_required
+def logouts(request):
+    logout(request)
+    return redirect(logins)
+
 
 @login_required
 def add(request):
@@ -75,7 +78,6 @@ def edit(request,emp_id):
         p.save()
 
         e1=Employee.objects.get(us_id=emp_id)
-        e1.profile_pic=request.FILES['photo']
         e1.address=request.POST.get('adrs')
         e1.user_id=p.id
         e1.save()
@@ -89,8 +91,4 @@ def delete(request,emp_id):
     dl.delete()
     return redirect(manage)
 
-@login_required
-def logouts(request):
-    logout(request)
-    return redirect(logins)
 
